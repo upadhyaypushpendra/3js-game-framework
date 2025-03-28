@@ -1,0 +1,48 @@
+{
+  "name": "3js-game-framework",
+  "version": "1.0.0",
+  "description": "3js-game-framework is a lightweight and flexible framework designed to streamline the creation of 3D games and interactive applications using Three.js",
+  "main": "index.js",
+  "browser": "index.js",
+  "license": "MIT",
+  "types": "./types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/upadhyaypushpendra/webm-to-wav-converter.git"
+  },
+  "keywords": [
+    "three.js",
+    "3d",
+    "game framework",
+    "game engine",
+    "3d game",
+    "game objects",
+    "animation loop",
+    "game development",
+    "game engine",
+    "javascript game",
+    "threejs",
+    "webgame",
+    "game framework"
+  ],
+  "author": {
+    "name": "Pushpendra Upadhyay",
+    "email": "pushpendraupadhyay6452@gmail.com",
+    "url": "https://upadhyaypushpendra.github.io/pushpendra.upadhyay/"
+  },
+  "bugs": {
+    "url": "https://github.com/upadhyaypushpendra/3js-game-framework/issues"
+  },
+  "homepage": "https://github.com/upadhyaypushpendra/3js-game-framework#readme",
+  "devDependencies": {
+    "@types/three": "^0.174.0",
+    "typescript": "5.8.2"
+  },
+  "scripts": {
+    "prepare": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "three": "0.174.0"
+  }
+}
