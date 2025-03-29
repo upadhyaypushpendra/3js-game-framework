@@ -2,13 +2,13 @@
   "name": "3js-game-framework",
   "version": "1.0.0",
   "description": "3js-game-framework is a lightweight and flexible framework designed to streamline the creation of 3D games and interactive applications using Three.js",
-  "main": "index.js",
-  "browser": "index.js",
+  "main": "dist/index.js",
+  "browser": "dist/index.js",
   "license": "MIT",
-  "types": "./types",
+  "types": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/upadhyaypushpendra/webm-to-wav-converter.git"
+    "url": "git+https://github.com/upadhyaypushpendra/3js-game-framework.git"
   },
   "keywords": [
     "three.js",
@@ -39,10 +39,15 @@
     "typescript": "5.8.2"
   },
   "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
     "prepare": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "three": "0.174.0"
-  }
+  },
+  "files": [
+    "dist/**/*"
+  ]
 }
