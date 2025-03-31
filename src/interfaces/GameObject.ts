@@ -1,22 +1,16 @@
 import * as THREE from "three";
 import { TJSGame } from "../core";
-import { GameObjectInitOptions } from "../types";
 
 export interface GameObject {
   /**
    * The game object name
    * This is used to identify the game object in the game.
    */
-  name?: string;
+  name: string;
   /**
    * The is reference to TJSGame object
    */
   game: TJSGame;
-  /**
-   * * Optional initialization options
-   * These are optional and can be used to create a mesh, geometry, and material for the game object.
-   */
-  initOptions?: GameObjectInitOptions;
 
   /**
    * * Optional mesh, geometry, and material properties
@@ -27,17 +21,15 @@ export interface GameObject {
   material?: THREE.Material | THREE.Material[];
 
   /**
-   * Called on the game start, before the first frame
-   * Do all the initialization here
-   * @param game - The game instance
-   * @param initOptions - Optional initialization options
+   * Called on the game start, before the first frame, mesh is added to the scene
    */
-  start(game: TJSGame): void;
+  start(): void;
+
   /**
-   * Called every frame
-   * Do all the game logic here
+   * Called on every frame
+   * @param dt - The delta time since the last frame
    */
-  update(): void;
+  update(dt: number): void;
 
   /**
    * Called when the game is ends

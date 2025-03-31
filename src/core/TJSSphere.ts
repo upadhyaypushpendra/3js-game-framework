@@ -2,50 +2,51 @@ import * as THREE from "three";
 import { GameObject } from "../interfaces";
 import { TJSGame } from "./TJSGame";
 import constants from "../constants";
-import { TJSSphereInitOptions } from "../types";
+import { TJSSphereOptions } from "../types";
 
-export class TJSPShere implements GameObject {
+export class TJSPSphere implements GameObject {
+  name: string = "TJSSphere";
   game: TJSGame;
-  initOptions?: Record<string, any>;
-  mesh?: THREE.Mesh;
-  material?: THREE.Material | THREE.Material[] | undefined;
-  geometry?: THREE.BufferGeometry<THREE.NormalBufferAttributes> | undefined;
+  mesh: THREE.Mesh;
+  material: THREE.Material | THREE.Material[];
+  geometry: THREE.BufferGeometry<THREE.NormalBufferAttributes>;
 
   /**
    * @param game - The game instance
-   * @param initOptions - Initialization options for the sphere (width, height, color)
+   * @param options - Initialization options for the sphere (width, height, color)
    * @description Creates a sphere in the game scene with the specified width, height, and color.
    * If no options are provided, default values from constants are used.
    * The sphere is created with a double-sided material.
    */
-  constructor(game: TJSGame, initOptions?: TJSSphereInitOptions) {
+  constructor(game: TJSGame, options: TJSSphereOptions = {}) {
     this.game = game;
-    this.initOptions = initOptions || {};
+
+    const defaultSphereOptions = constants.sphere;
+
+    const radius = options?.radius || defaultSphereOptions.radius;
+    const color = options?.color || defaultSphereOptions.color;
+
+    // Create a sphere geometry and material
+    this.geometry = new THREE.SphereGeometry(radius);
+    this.material = options?.material || new THREE.MeshBasicMaterial({ color });
+
+    // Create the mesh and add it to the scene
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
   }
 
   /**
    *
-   * @param game - The game instance
    * @description Creates a sphere in the game scene with the specified width, height, and color.
    */
-  start(game: TJSGame): void {
-    this.game = game;
-    const defaultSphereOptions = constants.sphere;
-
-    const radius = this.initOptions?.width || defaultSphereOptions.radius;
-    const color = this.initOptions?.color || defaultSphereOptions.color;
-
-    // Create a sphere geometry and material
-    this.geometry = new THREE.SphereGeometry(radius);
-    this.material = new THREE.MeshBasicMaterial({ color });
-
-    // Create the mesh and add it to the scene
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.rotation.x = -Math.PI / 2; // Rotate to make it horizontal
-    this.game.scene.add(this.mesh);
+  start(): void {
+    if (this.game) {
+      this.game.scene.add(this.mesh);
+    } else {
+      console.warn("game is undefined in:", this.name);
+    }
   }
 
-  update(): void {
+  update(dt: number): void {
     // Method not implemented.
   }
 
@@ -61,6 +62,5 @@ export class TJSPShere implements GameObject {
         (this.mesh.material as THREE.Material).dispose();
       }
     }
-    this.mesh = undefined;
   }
 }

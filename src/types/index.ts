@@ -1,4 +1,4 @@
-import { Vector3, Light, Color } from "three";
+import { BufferGeometry, Material, Light, Color } from "three";
 
 export type CameraOptions = {
   /**
@@ -47,7 +47,7 @@ export type LightsOptions = {
   disableDefaults?: boolean;
 };
 
-export type TGameOptions = {
+export type TJSGameOptions = {
   /**
    * Camera Options
    */
@@ -68,9 +68,16 @@ export type TGameOptions = {
   disableAnimationLoop?: boolean;
 };
 
-export type GameObjectInitOptions = Record<string, any>;
+export type GameObjectOptions = {
+  geometry?: BufferGeometry;
+  material?: Material | Material[];
+  /**
+   * Color of the material
+   */
+  color?: number;
+};
 
-export type TJSPlaneInitOptions = {
+export type TJSPlaneOptions = GameObjectOptions & {
   /**
    * Width of the plane, default is 10
    */
@@ -79,13 +86,9 @@ export type TJSPlaneInitOptions = {
    * Height of the plane, default is 10
    */
   height?: number;
-  /**
-   * Color of the plane, default is 0x00ff00 (green)
-   */
-  color?: number;
 };
 
-export type TJSBoxInitOptions = {
+export type TJSBoxOptions = GameObjectOptions & {
   /**
    * Width of the box, default is 1
    */
@@ -98,10 +101,11 @@ export type TJSBoxInitOptions = {
    * Depth of the box, default is 1
    */
   depth?: number;
-  /**
-   * Color of the box, default is 0xf5f5f5 (whitesmoke)
-   */
-  color?: number;
 };
 
-export type TJSSphereInitOptions = {};
+export type TJSSphereOptions = GameObjectOptions & {
+  /**
+   * Radius of the box
+   */
+  radius?: number;
+};

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import {
-  TGameOptions,
+  TJSGameOptions,
   CameraOptions,
   LightsOptions,
   SceneOptions,
@@ -25,7 +25,7 @@ export class TJSGame {
    *
    * @param options - TGame Options
    */
-  constructor(options: TGameOptions = {}) {
+  constructor(options: TJSGameOptions = {}) {
     this.gameObjects = new Set();
     this.clock = new THREE.Clock();
     this.animationLoopEnabled = options.disableAnimationLoop ? false : true;
@@ -38,18 +38,6 @@ export class TJSGame {
     this.setupRenderer();
     this.setupCamera(options.camera);
     this.addResizeListener();
-    this.addRefreshListener();
-  }
-
-  /**
-   * Add event listener to update the canvas if the page is reloaded
-   */
-  addRefreshListener() {
-    window.addEventListener("DOMContentLoaded", () => {
-      this.update();
-
-      this.renderer.render(this.scene, this.camera);
-    });
   }
 
   addResizeListener() {
@@ -140,15 +128,18 @@ export class TJSGame {
   start() {
     this.clock.start();
     for (let gameObject of this.gameObjects) {
-      gameObject.start(this);
+      gameObject.start();
     }
     if (this.animationLoopEnabled) this.animate();
   }
 
-  animate() {
+  /**
+   * Animation loop
+   */
+  private animate() {
     requestAnimationFrame(this.animate.bind(this));
 
-    this.update();
+    this.update(this.clock.getDelta());
   }
 
   /**
@@ -156,7 +147,7 @@ export class TJSGame {
    * @param gameObject - GameObject to be added to the game
    */
   addGameObject(gameObject: GameObject) {
-    if (this.clock.running) gameObject.start(this);
+    if (this.clock.running) gameObject.start();
 
     this.gameObjects.add(gameObject);
     let name = gameObject?.name || gameObject.constructor.name;
@@ -184,16 +175,22 @@ export class TJSGame {
     this.gameObjects.delete(gameObject);
   }
 
+  /**
+   * Get GameObject by name
+   * @param name - Name of the GameObject
+   * @returns GameObject
+   */
   getGameObject(name: string) {
     return this.gameObjectMap.get(name);
   }
 
   /**
-   * To be invoked in animation loop, Update all game objects in TSGame
+   * All updates will be done here
+   * @param dt - Delta time since last update
    */
-  update() {
+  update(dt: number) {
     for (let gameObject of this.gameObjects) {
-      gameObject.update();
+      gameObject.update(dt);
     }
     if (this.controls) this.controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
 
@@ -204,6 +201,7 @@ export class TJSGame {
    * To be invoked when the game ends
    */
   end() {
+    this.gameObjects.forEach((gameObject) => gameObject.end());
     this.clock.stop();
   }
 }
