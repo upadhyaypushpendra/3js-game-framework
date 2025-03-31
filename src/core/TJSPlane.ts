@@ -29,10 +29,12 @@ export class TJSPlane implements GameObject {
 
     // Create a plane geometry and material
     this.geometry = new THREE.PlaneGeometry(width, height);
-    this.material = new THREE.MeshBasicMaterial({
-      color,
-      side: THREE.DoubleSide,
-    });
+    this.material =
+      options.material ||
+      new THREE.MeshBasicMaterial({
+        color,
+        side: THREE.DoubleSide,
+      });
 
     // Create the mesh and add it to the scene
     this.mesh = new THREE.Mesh(this.geometry, this.material);

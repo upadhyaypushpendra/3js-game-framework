@@ -31,7 +31,7 @@ export class TJSBox implements GameObject {
     this.geometry = new THREE.BoxGeometry(width, height, depth);
 
     // Create basic material
-    this.material = new THREE.MeshBasicMaterial({ color });
+    this.material = options.material || new THREE.MeshBasicMaterial({ color });
 
     // Create the mesh and add it to the scene
     this.mesh = new THREE.Mesh(this.geometry, this.material);
