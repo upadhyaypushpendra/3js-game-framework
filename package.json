@@ -1,6 +1,6 @@
 {
   "name": "3js-game-framework",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "3js-game-framework is a lightweight and flexible framework designed to streamline the creation of 3D games and interactive applications using Three.js",
   "main": "dist/index.js",
   "browser": "dist/index.js",
